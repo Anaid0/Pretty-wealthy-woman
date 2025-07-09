@@ -6,10 +6,11 @@
   <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
+  <button onclick="window.history.back()" class="btn-volver">← Volver</button>
   <h2>🔐 Iniciar sesión</h2>
   <form action="../php/validar_login.php" method="POST">
     <input type="email" name="correo" placeholder="Correo electrónico" required>
-    <input type="password" name="clave" placeholder="Contraseña" required>
+    <input type="password" name="password" placeholder="Contraseña" required>
     <button type="submit">Ingresar</button>
   </form>
 </body>
