@@ -17,7 +17,7 @@
         <a href="#">Productos</a>
         <a href="#">Ofertas</a>
         <a href="#">Contacto</a>
-        <a href="login.php">Iniciar sesión</a>
+        <a href="./pages/login.html">Iniciar sesión</a>
       </nav>
     </div>
   </header>
@@ -27,8 +27,8 @@
     <img src="assets/img/banner.jpg" alt="Maquillaje Profesional">
     <div class="hero-text">
       <h1>¡Resalta tu belleza!</h1>
-      <p>Productos 100% originales para mujeres brillantes ✨</p>
-      <a href="#" class="btn">Explorar tienda</a>
+      <p>Productos de las mejores marcas para mujeres brillantes ✨</p>
+      <a href="#" class="btn">Contátanos</a>
     </div>
   </section>
 
@@ -48,7 +48,7 @@
       if ($resultado->num_rows > 0) {
         while ($producto = $resultado->fetch_assoc()) {
           echo '<div class="producto">';
-          echo '<img src="assets/img/' . $producto['imagen'] . '" alt="' . $producto['nombre'] . '">';
+          echo '<img src="img/' . $producto['imagen'] . '" alt="' . $producto['nombre'] . '">';
           echo '<h3>' . $producto['nombre'] . '</h3>';
           echo '<p>' . $producto['descripcion'] . '</p>';
           echo '<p><strong>Proveedor:</strong> ' . $producto['nombre_empresa'] . '</p>';

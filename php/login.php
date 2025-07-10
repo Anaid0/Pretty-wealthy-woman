@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Pretty Wealthy Woman</title>
-    <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
-    <h2>🔐 Iniciar Sesión</h2>
-    <form method="POST" action="php/login.php">
-        <input type="email" name="correo" placeholder="Correo" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <button type="submit">Ingresar</button>
-    </form>
-</body>
-</html>
-
 <?php
 session_start();
-require_once("conexion.php");
+require("./conexion.php");
 
 $correo = $_POST['correo'];
 $password = $_POST['password'];
@@ -34,12 +17,12 @@ if ($result->num_rows === 1) {
     $_SESSION['rol'] = $usuario['rol'];
 
     if ($usuario['rol'] === 'admin') {
-        header("Location: admin/dashboard.php");
+        header("Location: ./admin/dashboard.php");
     } else {
         header("Location: ../index.php");
     }
 } else {
-    echo "<script>alert('Correo o contraseña incorrectos.'); window.location='../login.php';</script>";
+    echo "<script>alert('Correo o contraseña incorrectos.'); window.location='../pages/login.html';</script>";
 }
 ?>
 
