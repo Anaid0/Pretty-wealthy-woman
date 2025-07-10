@@ -16,6 +16,8 @@ require_once("../conexion.php");
 </head>
 <body>
 
+    <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+
     <header><h1>Panel Administrativo 💼</h1></header>
 
     <div class="botones top-actions">
@@ -49,7 +51,6 @@ require_once("../conexion.php");
     <?php include('agregar_usuario.php'); ?>
   </div>
 </div>
-
 
     <!-- ✅ Modal Ver Proveedores -->
     <div class="modal" id="formVerProveedores">
