@@ -49,13 +49,15 @@ function cerrarModalEditarProveedor() {
 }
 
 function abrirModalEditarUsuario(usuario) {
-  document.getElementById('user_id').value = usuario.id;
-  document.getElementById('user_nombre').value = usuario.nombre;
-  document.getElementById('user_correo').value = usuario.correo;
-  document.getElementById('user_rol').value = usuario.rol;
-
-  document.getElementById('modalEditarUsuario').style.display = 'block';
+  document.getElementById("user_id").value = usuario.id_usuario;
+  document.getElementById("user_nombre").value = usuario.nombre;
+  document.getElementById("user_documento").value = usuario.documento;
+  document.getElementById("user_celular").value = usuario.celular;
+  document.getElementById("user_correo").value = usuario.correo;
+  document.getElementById("user_rol").value = usuario.rol;
+  document.getElementById("modalEditarUsuario").style.display = "block";
 }
+
 
 function cerrarModalEditarUsuario() {
   document.getElementById('modalEditarUsuario').style.display = 'none';

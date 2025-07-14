@@ -1,36 +1,36 @@
 <?php
 require_once("../conexion.php");
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
     $descripcion = $_POST["descripcion"];
     $precio = $_POST["precio"];
     $stock = $_POST["stock"];
     $id_proveedor = $_POST["id_proveedor"];
+    $nombreImagenOriginal = $_FILES['imagen']['name'];
+    $nombreImagen = str_replace(' ', '_', $nombreImagenOriginal);
+    $rutaTemporal = $_FILES['imagen']['tmp_name'];
+    $carpetaDestino = '../../img/' . $nombreImagen;
+    $rutaParaBaseDeDatos = 'img/' . $nombreImagen;
+    move_uploaded_file($_FILES['imagen']['tmp_name'], $carpetaDestino);
 
-    if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === 0) {
-        $nombreImagen = basename($_FILES["imagen"]["name"]);
-        $rutaDestino = "./img/" . $nombreImagen;
-        move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaDestino);
-    } else {
-        echo "<script>alert('Error con la imagen');</script>";
-        exit();
-    }
 
-    // Determinar estado
     $estado = ($stock > 0) ? "ACTIVO" : "INACTIVO";
 
     $stmt = $conexion->prepare("INSERT INTO productos (nombre, descripcion, precio, stock, id_proveedor, imagen, activo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssdisss", $nombre, $descripcion, $precio, $stock, $id_proveedor, $nombreImagen, $estado);
+    $stmt->bind_param("ssdisss", $nombre, $descripcion, $precio, $stock, $id_proveedor, $rutaParaBaseDeDatos, $estado);
 
     if ($stmt->execute()) {
-        echo "<script>alert('✅ Producto agregado correctamente'); window.location.href = './dashboard.php';</script>";
+        echo "alert('✅ Producto agregado correctamente'); window.location.href = './dashboard.php';";
     } else {
-        echo "<script>alert('❌ Error al agregar el producto');</script>";
+        echo "alert('❌ Error al agregar el producto'); window.location.href = './dashboard.php';";
     }
 
     $stmt->close();
-    $conexion->close();
 }
 ?>
 

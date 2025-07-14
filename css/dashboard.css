@@ -50,6 +50,24 @@ header h1 {
   background-color: #c092ff;
 }
 
+a.btn-dashboard {
+  display: inline-block;
+  background-color: #dab6fc; 
+  color: #ffffff;
+  padding: 8px 10px;
+  border-radius: 50px; 
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+a.btn-dashboard:hover {
+  background-color: #b78be0;
+}
+
 /* Contenedor de productos */
 #contenedor-productos {
   display: grid;

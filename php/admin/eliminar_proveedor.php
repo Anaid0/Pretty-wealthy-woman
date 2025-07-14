@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Proveedor eliminado correctamente'); location.href='dashboard.php';</script>";
+            echo "<script>alert('✅ Proveedor eliminado correctamente'); window.location.href = './dashboard.php';</script>";
         } else {
-            echo "Error al eliminar: " . $stmt->error;
+            echo "<script>alert('❌ Error al eliminar Proveedor'); window.location.href = './dashboard.php';</script> " . $stmt->error;
         }
     }
     $conexion->close();

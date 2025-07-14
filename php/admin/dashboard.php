@@ -22,10 +22,11 @@ require_once("../conexion.php");
 
     <div class="botones top-actions">
         <button onclick="mostrarFormulario('formProducto')">➕ Agregar Producto</button>
-        <button onclick="mostrarFormulario('formProveedor')">🏢 Agregar Proveedor</button>
         <button onclick="mostrarFormulario('formVerProveedores')">📋 Ver Proveedores</button>
-        <button onclick="mostrarFormulario('formUsuario')">👤 Agregar Usuario</button>
-        <a href="../logout.php">🚪 Cerrar sesión</a>
+        <a href="agregar_usuario.php" class="btn-dashboard">👤 Agregar Usuario</a>
+        <a href="agregar_proveedor.php" class="btn-dashboard">➕ Agregar Proveedor</a>
+        <a href="../logout.php" class="btn-dashboard">🚪 Cerrar sesión</a>
+
     </div>
 
     <!-- ✅ Modal Agregar Producto -->
@@ -35,22 +36,6 @@ require_once("../conexion.php");
             <?php include('agregar_producto.php'); ?>
         </div>
     </div>
-
-    <!-- ✅ Modal Agregar Proveedor -->
-    <div class="modal" id="formProveedor">
-        <div class="modal-contenido">
-            <span class="cerrar" onclick="ocultarFormulario('formProveedor')">&times;</span>
-            <?php include('agregar_proveedor.php'); ?>
-        </div>
-    </div>
-
-  <!-- ✅ Modal Agregar Usuario -->
-    <div class="modal" id="formUsuario">
-  <div class="modal-contenido">
-    <span class="cerrar" onclick="ocultarFormulario('formUsuario')">&times;</span>
-    <?php include('agregar_usuario.php'); ?>
-  </div>
-</div>
 
     <!-- ✅ Modal Ver Proveedores -->
     <div class="modal" id="formVerProveedores">
@@ -68,25 +53,24 @@ require_once("../conexion.php");
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT * FROM proveedores");
-                    if ($resultado->num_rows > 0) {
+                        $resultado = $conexion->query("SELECT * FROM proveedores");
+                        if ($resultado->num_rows > 0) {
                         while ($proveedor = $resultado->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>{$proveedor['nombre_empresa']}</td>";
-                            echo "<td>{$proveedor['telefono']}</td>";
-                            echo "<td>{$proveedor['email']}</td>";
-                            echo "<td>
-                            <button onclick='abrirModalEditarProveedor(" . json_encode($proveedores) . ")'>✏️ Editar</button>
-                            <form method=\"POST\" action=\"eliminar_proveedor.php\" style=\"display:inline-block\" onsubmit=\"return confirm('¿Seguro que deseas eliminar este proveedor?')\">
-                            <input type=\"hidden\" name=\"id\" value=\"{$proveedores['id']}\">
-                            <button type=\"submit\">🗑️ Eliminar</button>
-                            </form>
-                            </td>";
-
-                            echo "</tr>";
-                        }
+                        echo "<tr>";
+                        echo "<td>{$proveedor['nombre_empresa']}</td>";
+                        echo "<td>{$proveedor['telefono']}</td>";
+                        echo "<td>{$proveedor['email']}</td>";
+                        echo "<td>
+                        <button onclick='abrirModalEditarProveedor(" . json_encode($proveedor) . ")'>✏️ Editar</button>
+                        <form method=\"POST\" action=\"eliminar_proveedor.php\" style=\"display:inline-block\" onsubmit=\"return confirm(\"¿Seguro que deseas eliminar este proveedor?\")\">
+                        <input type=\"hidden\" name=\"id\" value=\"{$proveedor['id']}\">
+                        <button type=\"submit\">🗑️ Eliminar</button>
+                        </form>
+                        </td>";
+                        echo "</tr>";
+                        }   
                     } else {
-                        echo "<tr><td colspan='4'>No hay proveedores registrados.</td></tr>";
+                    echo "<tr><td colspan='4'>No hay proveedores registrados.</td></tr>";
                     }
                     ?>
                 </tbody>
@@ -141,7 +125,7 @@ require_once("../conexion.php");
             if ($productos->num_rows > 0) {
                 while ($producto = $productos->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td><img src='../../img/{$producto['imagen']}' width='60'></td>";
+                    echo "<td><img src='../../{$producto['imagen']}' width='60'></td>";
                     echo "<td>{$producto['nombre']}</td>";
                     echo "<td>{$producto['descripcion']}</td>";
                     echo "<td>$" . number_format($producto['precio'], 2) . "</td>";
@@ -192,8 +176,11 @@ require_once("../conexion.php");
     <thead>
         <tr>
             <th>Nombre</th>
+            <th>Documento</th>
+            <th>Celular</th>
             <th>Correo</th>
             <th>Rol</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -204,12 +191,15 @@ require_once("../conexion.php");
         while ($usuario = $usuarios->fetch_assoc()) {
             echo "<tr>";
             echo "<td>{$usuario['nombre']}</td>";
+            echo "<td>{$usuario['documento']}</td>";
+            echo "<td>{$usuario['celular']}</td>";
             echo "<td>{$usuario['correo']}</td>";
             echo "<td>{$usuario['rol']}</td>";
+            echo "<td>{$usuario['estado']}</td>";
             echo "<td>
                 <button onclick='abrirModalEditarUsuario(" . htmlspecialchars(json_encode($usuario)) . ")'>✏️ Editar</button>
                 <form method=\"POST\" action=\"eliminar_usuario.php\" style=\"display:inline-block\" onsubmit=\"return confirm(\"¿Eliminar este usuario?\")\">
-                    <input type=\"hidden\" name=\"id\" value=\"{$usuario['id']}\">
+                    <input type=\"hidden\" name=\"id_usuario\" value=\"{$usuario['id_usuario']}\">
                     <button type=\"submit\">🗑️ Eliminar</button>
                 </form>
             </td>";
@@ -228,10 +218,16 @@ require_once("../conexion.php");
     <span class="cerrar" onclick="cerrarModalEditarUsuario()">&times;</span>
     <h2>Editar Usuario</h2>
     <form id="formEditarUsuario" action="editar_usuario.php" method="POST">
-      <input type="hidden" name="id" id="user_id">
+      <input type="hidden" name="id_usuario" id="user_id">
 
       <label>Nombre:</label>
       <input type="text" name="nombre" id="user_nombre" required><br>
+
+      <label>Documento:</label>
+      <input type="text" name="documento" id="user_documento" required><br>
+
+      <label>Celular:</label>
+      <input type="text" name="celular" id="user_celular" required><br>
 
       <label>Correo:</label>
       <input type="email" name="correo" id="user_correo" required><br>

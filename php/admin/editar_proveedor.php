@@ -12,9 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssi", $nombre, $telefono, $email, $id);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Proveedor actualizado exitosamente'); location.href='dashboard.php';</script>";
+        echo "<script>alert('✅ Proveedor actualizado correctamente'); window.location.href = './dashboard.php';</script>";
     } else {
-        echo "Error al actualizar proveedor: " . $stmt->error;
+        echo "<script>alert('❌ Error al actualizar Proveedor'); window.location.href = './dashboard.php';</script> " . $stmt->error;
     }
     $conexion->close();
     exit();

@@ -11,7 +11,7 @@ $activo = ($stock == 0) ? 'INACTIVO' : 'ACTIVO';
 
 if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
     $img_nombre = basename($_FILES['imagen']['name']);
-    move_uploaded_file($_FILES['imagen']['tmp_name'], "../../assets/img/" . $img_nombre);
+    move_uploaded_file($_FILES['imagen']['tmp_name'], "../../img/" . $img_nombre);
 
     $sql = "UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=?, activo=?, imagen=?, id_proveedor=? WHERE id_producto=?";
     $stmt = $conexion->prepare($sql);
@@ -23,9 +23,9 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
 }
 
 if ($stmt->execute()) {
-    echo "Producto actualizado exitosamente";
+    echo "<script>alert('✅ Producto actualizado correctamente'); window.location.href = './dashboard.php';</script>";
 } else {
-    echo "Error al actualizar: " . $stmt->error;
+    echo "<script>alert('❌ Error al actualizar Producto'); window.location.href = './dashboard.php';</script>" . $stmt->error;
 }
 $conexion->close();
 ?>

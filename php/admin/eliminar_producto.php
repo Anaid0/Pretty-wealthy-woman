@@ -7,9 +7,8 @@ $stmt = $conexion->prepare($sql);
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    echo "ok";
+    echo "<script>alert('✅ Producto eliminado correctamente'); window.location.href = './dashboard.php';</script>";
 } else {
-    echo "error: " . $stmt->error;
+    echo "<script>alert('❌ Error al eliminar Producto'); window.location.href = './dashboard.php';</script>" . $stmt->error;
 }
-$conexion->close();
 ?>
