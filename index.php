@@ -1,31 +1,41 @@
 <?php require_once("php/conexion.php"); ?>
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Pretty Wealthy Woman</title>
 <link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/menu.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-  <!-- 🔝 Header Sticky -->
-  <header class="main-header">
-    <div class="container">
-      <div class="logo">💖 Pretty Wealthy Woman</div>
-      <nav class="nav">
-        <a href="#inicio">Inicio</a>
-        <a href="./php/catalogo.php">Catálogo</a>
-        <a href="#contacto">Contáctanos</a>
-        <a href="#historia">Sobre nosotras</a>
-        <a href="./php/user/ver_carrito.php">Carrito</a>
-        <a href="./php/user/registro.php">Crear cuenta</a>
-        <a href="./pages/login.html">Iniciar sesión</a>
-      </nav>
-    </div>
-  </header>
+<!-- Header Sticky -->
+<header class="menu-header">
+  <div class="menu-container">
+    <div class="menu-logo">💖 Pretty Wealthy Woman</div>
+    <nav class="menu-nav">
+      <a class="menu-link" href="#inicio">Inicio</a>
+      <a class="menu-link" href="./php/catalogo.php">Catálogo</a>
+      <a class="menu-link" href="#contacto">Contáctanos</a>
+      <a class="menu-link" href="#historia">Sobre nosotras</a>
+      <a class="menu-link" href="./php/user/ver_carrito.php">Carrito</a>
 
-  <!-- 📸 Banner -->
+      <?php if (isset($_SESSION['correo'])): ?>
+        <a class="menu-link" href="./php/logout.php">Cerrar sesión</a>
+      <?php else: ?>
+        <a class="menu-link" href="./php/user/registro.php">Crear cuenta</a>
+        <a class="menu-link" href="./pages/login.html">Iniciar sesión</a>
+      <?php endif; ?>
+    </nav>
+  </div>
+</header>
+
+  <!--  Banner -->
   <section id="inicio" class="hero-banner">
     <img src="img/banner.webp" alt="Maquillaje Profesional">
     <div class="hero-text">
@@ -56,7 +66,7 @@
           echo '<p>' . $producto['descripcion'] . '</p>';
           echo '<p><strong>Proveedor:</strong> ' . $producto['nombre_empresa'] . '</p>';
           echo '<p><strong>💲' . number_format($producto['precio'], 2) . '</strong></p>';
-          echo '<a href="catalogo.php" class="btn">Ver más</a>';
+          echo '<a href="php/catalogo.php" class="btn">Ver más</a>';
           echo '</div>';
         }
       } else {
@@ -108,9 +118,17 @@
   </form>
   </section>
 
-  <!-- 🧾 Footer -->
+  <!--  Footer -->
   <footer>
     <p>&copy; 2025 Pretty Wealthy Woman | Todos los derechos reservados</p>
+    <div class="redes-sociales">
+      <h5>Siguenos en todas nuestra redes sociales para mas promociones, noticias y anuncios:D</h5>
+        <a href="https://www.facebook.com/share/1C3Uggm93s/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/prettywealthywoman?igsh=MWlieW1xdDB3azh3ZQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=prettywealthywoman27@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.tiktok.com/@pretty_wealty_woman?_t=ZS-8y7Paa97nnO&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://x.com/dcapoficial?s=21" target="_blank"><i class="fab fa-twitter"></i></a>
+    </div>
   </footer>
 
   <script src="js/index.js"></script>

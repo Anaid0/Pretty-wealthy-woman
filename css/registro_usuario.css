@@ -87,3 +87,34 @@
     .btn-volver:hover {
       text-decoration: underline;
     }
+
+/* ------------ FOOTER ------------ */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffcce6;
+  margin-top: 40px;
+  color: #70083d;
+  font-weight: bold;
+}
+
+.redes-sociales {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.redes-sociales a {
+    font-size: 28px;
+    color: #000000;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.redes-sociales a:hover {
+    transform: scale(1.2);
+    color: #70083d;
+}

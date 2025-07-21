@@ -1,5 +1,10 @@
 <?php
 require_once("../conexion.php");
+session_start();
+if (!isset($_SESSION['correo']) || $_SESSION['rol'] !== 'admin') {
+    header("Location: ../../index.php");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];

@@ -1,9 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['correo']) || $_SESSION['rol'] !== 'admin') {
-    header("Location: /login.php");
+    header("Location: ../../index.php");
     exit();
 }
+
 require_once("../conexion.php");
 ?>
 
@@ -16,8 +17,6 @@ require_once("../conexion.php");
 </head>
 <body>
 
-    <button onclick="window.history.back()" class="btn-volver">← Volver</button>
-
     <header><h1>Panel Administrativo 💼</h1></header>
 
     <div class="botones top-actions">
@@ -25,6 +24,7 @@ require_once("../conexion.php");
         <button onclick="mostrarFormulario('formVerProveedores')">📋 Ver Proveedores</button>
         <a href="agregar_usuario.php" class="btn-dashboard">👤 Agregar Usuario</a>
         <a href="agregar_proveedor.php" class="btn-dashboard">➕ Agregar Proveedor</a>
+        <a href="exportarPDF_ventas.php" class="btn-dashboard">Descargar PDF de ventas</a>
         <a href="../logout.php" class="btn-dashboard">🚪 Cerrar sesión</a>
 
     </div>
@@ -41,7 +41,7 @@ require_once("../conexion.php");
     <div class="modal" id="formVerProveedores">
         <div class="modal-contenido">
             <span class="cerrar" onclick="ocultarFormulario('formVerProveedores')">&times;</span>
-            <h2>Lista de Proveedores</h2>
+            <h2>Lista de Proveedores</h2> <a href="exportarPDF_proveedores.php" class="btn-dashboard">Descargar PDF</a>
             <table class="tabla-proveedores">
                 <thead>
                     <tr>
@@ -102,7 +102,7 @@ require_once("../conexion.php");
 
 
     <!-- ✅ Tabla de Productos -->
-    <h2 style="text-align:center;">Lista de Productos</h2>
+    <h2 style="text-align:center;">Lista de Productos</h2> <a href="exportarPDF_productos.php" class="btn-dashboard">Descargar PDF</a>
     <table class="tabla-productos">
         <thead>
             <tr>
@@ -171,7 +171,7 @@ require_once("../conexion.php");
     </div>
 
     <!-- ✅ Tabla de Usuarios -->
-    <h2 style="text-align:center;">Usuarios Registrados</h2>
+    <h2 style="text-align:center;">Usuarios Registrados</h2><a href="exportarPDF_usuarios.php" class="btn-dashboard">Descargar PDF</a>
 <table class="tabla-productos">
     <thead>
         <tr>

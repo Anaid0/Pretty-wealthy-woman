@@ -1,5 +1,5 @@
 <?php
-require_once("conexion.php"); // Asegúrate de que la ruta es correcta
+require_once("conexion.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nombre = trim($_POST["nombre"]);

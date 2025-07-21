@@ -1,8 +1,14 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff8f5;
   margin: 0;
-  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #333;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 h2 {
@@ -12,7 +18,8 @@ h2 {
 }
 
 table {
-  width: 100%;
+  margin: 15px;
+  width: 98%;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -55,22 +62,13 @@ a.btn-volver {
   transition: 0.3s ease;
 }
 
-a.btn-volver:hover {
-  background-color: #70083d;
-  color: white;
-}
-
 a {
   color: #c0392b;
   text-decoration: none;
-  font-size: 20px;
-}
-
-a:hover {
-  color: #e74c3c;
 }
 
 h3 {
+  margin: 20px;
   text-align: right;
   margin-top: 20px;
   color: #70083d;
@@ -86,10 +84,42 @@ button {
   border-radius: 8px;
   cursor: pointer;
   display: block;
+  margin: 15px;
   margin: 30px auto 0;
   transition: background 0.3s ease;
 }
 
 button:hover {
   background-color: #c13c86;
+}
+
+/* ------------ FOOTER ------------ */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffcce6;
+  margin-top: 40px;
+  color: #70083d;
+  font-weight: bold;
+}
+
+.redes-sociales {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.redes-sociales a {
+    font-size: 28px;
+    color: #000000;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.redes-sociales a:hover {
+    transform: scale(1.2);
+    color: #70083d;
 }

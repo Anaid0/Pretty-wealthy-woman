@@ -18,15 +18,31 @@ $id_usuario = $usuario['id_usuario'];
 $id_producto = $_GET['id'];
 $cantidad = $_GET['cantidad'];
 
-$verificar = $conexion->prepare("SELECT * FROM carrito WHERE id_usuario = ? AND id_producto = ?");
+// Verificar si ya hay ese producto en el carrito
+$verificar = $conexion->prepare("SELECT cantidad FROM carrito WHERE id_usuario = ? AND id_producto = ?");
 $verificar->bind_param("ii", $id_usuario, $id_producto);
 $verificar->execute();
 $resultado = $verificar->get_result();
 
 if ($resultado->num_rows > 0) {
-    $conexion->query("UPDATE carrito SET cantidad = cantidad + $cantidad WHERE id_usuario = $id_usuario AND id_producto = $id_producto");
+    $fila = $resultado->fetch_assoc();
+    $cantidad_actual = $fila['cantidad'];
+    $cantidad_total = $cantidad_actual + $cantidad;
+
+    if ($cantidad_total > 12) {
+        echo "<script>alert('Producto solamente puede ser adquirido 12 veces por compra.'); window.location.href='../catalogo.php';</script>";
+        exit();
+    }
+
+    $actualizar = $conexion->prepare("UPDATE carrito SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?");
+    $actualizar->bind_param("iii", $cantidad_total, $id_usuario, $id_producto);
+    $actualizar->execute();
 } else {
-    // Insertar nuevo
+    if ($cantidad > 12) {
+        echo "<script>alert('Producto solamente puede ser adquirido 12 veces por compra.'); window.location.href='../catalogo.php';</script>";
+        exit();
+    }
+
     $insertar = $conexion->prepare("INSERT INTO carrito (id_usuario, id_producto, cantidad) VALUES (?, ?, ?)");
     $insertar->bind_param("iii", $id_usuario, $id_producto, $cantidad);
     $insertar->execute();
