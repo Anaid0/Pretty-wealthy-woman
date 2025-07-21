@@ -6,8 +6,18 @@ if (!isset($_SESSION['correo']) || $_SESSION['rol'] !== 'admin') {
     exit();
 }
 require('../../pdf/fpdf.php');
+$sql = "SELECT 
+            p.id_producto,
+            p.nombre,
+            p.descripcion,
+            p.precio,
+            p.stock,
+            p.activo,
+            pr.nombre_empresa AS nombre_proveedor
+        FROM productos p
+        INNER JOIN proveedores pr ON p.id_proveedor = pr.id
+        ORDER BY p.nombre ASC";
 
-$sql = "SELECT * FROM usuarios";
 $result = $conexion->query($sql);
 
 // Crear PDF
@@ -17,66 +27,36 @@ $pdf->SetFont('Arial', 'B', 14);
 $pdf->Cell(190, 10, 'Lista de Productos', 0, 1, 'C');
 $pdf->Ln(5);
 
-// Encabezado
-$pdf->SetFont('Arial', 'B', 6);
-$pdf->Cell(10, 6, 'ID', 1, 0, 'C');
-$pdf->Cell(25, 6, 'Nombre', 1, 0, 'C');
-$pdf->Cell(40, 6, 'Descripcion', 1, 0, 'C');
-$pdf->Cell(15, 6, 'Precio', 1, 0, 'C');
-$pdf->Cell(30, 6, 'Stock', 1, 0, 'C');
-$pdf->Cell(10, 6, 'Imagen', 1, 0, 'C');
-$pdf->Cell(15, 6, 'Estado', 1, 0, 'C');
-$pdf->Cell(15, 6, 'Proveedor', 1, 0, 'C');
+// Encabezados de tabla
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->Cell(10, 8, 'ID', 1, 0, 'C');
+$pdf->Cell(40, 8, 'Nombre', 1, 0, 'C');
+$pdf->Cell(50, 8, 'Descripcion', 1, 0, 'C');
+$pdf->Cell(20, 8, 'Precio', 1, 0, 'C');
+$pdf->Cell(15, 8, 'Stock', 1, 0, 'C');
+$pdf->Cell(25, 8, 'Estado', 1, 0, 'C');
+$pdf->Cell(30, 8, 'Proveedor', 1, 1, 'C');
 
-// Datos
-$pdf->SetFont('Arial', '', 6);
+// Colores
+$pdf->SetFillColor(255, 192, 203); // Rosita
+$pdf->SetDrawColor(200, 100, 100);
+
+// Cuerpo de tabla
+$pdf->SetFont('Arial', '', 7);
+$fill = false;
 while ($row = $result->fetch_assoc()) {
-    // Guardar posición inicial de la fila
-    $x = $pdf->GetX();
-    $y = $pdf->GetY();
+    $pdf->SetFillColor(255, 230, 240);
 
-    // Descripción
-    $pdf->SetXY($x + 10 + 25, $y);
-    $pdf->MultiCell(40, 4, utf8_decode($row['id_producto']), 1);
-    $desc_height = $pdf->GetY() - $y;
+    $pdf->Cell(10, 6, $row['id_producto'], 1, 0, 'C', $fill);
+    $pdf->Cell(40, 6, utf8_decode($row['nombre']), 1, 0, 'L', $fill);
+    $pdf->Cell(50, 6, utf8_decode($row['descripcion']), 1, 0, 'L', $fill);
+    $pdf->Cell(20, 6, '$' . number_format($row['precio'], 0), 1, 0, 'R', $fill);
+    $pdf->Cell(15, 6, $row['stock'], 1, 0, 'C', $fill);
+    $pdf->Cell(25, 6, utf8_decode($row['activo']), 1, 0, 'C', $fill);
+    $pdf->Cell(30, 6, utf8_decode($row['nombre_proveedor']), 1, 1, 'L', $fill);
 
-    // Imagen
-    $pdf->SetXY($x + 10 + 25 + 40 + 15, $y);
-    $pdf->MultiCell(30, 4, utf8_decode($row['nombre']), 1);
-    $img_height = $pdf->GetY() - $y;
-
-    // Calcular altura máxima de la fila
-    $row_height = max($desc_height, $img_height, 6);
-
-    // Volver al inicio de fila
-    $pdf->SetXY($x, $y);
-
-    // ID
-    $pdf->Cell(10, $row_height, $row['descripcion'], 1);
-
-    // Nombre
-    $pdf->Cell(25, $row_height, utf8_decode($row['precio']), 1);
-
-    // Nombre
-    $pdf->Cell(35, $row_height, utf8_decode($row['stock']), 1);
-
-    // Nombre
-    $pdf->Cell(45, $row_height, utf8_decode($row['imagen']), 1);
-
-    // Descripción (ya dibujada con MultiCell)
-    $pdf->SetXY($x + 10 + 25, $y + $row_height);
-
-    // Color
-    $pdf->SetXY($x + 10 + 25 + 40, $y);
-    $pdf->Cell(15, $row_height, utf8_decode($row['activo']), 1);
-
-        // Color
-    $pdf->SetXY($x + 10 + 25 + 40, $y);
-    $pdf->Cell(15, $row_height, utf8_decode($row['id_proveedor']), 1);
-
-    // Pasar a siguiente fila completa
-    $pdf->SetY($y + $row_height);
+    $fill = !$fill;
 }
 
-$pdf->Output('D', 'usuarios.pdf');
+$pdf->Output('D', 'productos.pdf');
 ?>

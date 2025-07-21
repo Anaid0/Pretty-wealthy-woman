@@ -102,7 +102,7 @@ require_once("../conexion.php");
 
 
     <!-- ✅ Tabla de Productos -->
-    <h2 style="text-align:center;">Lista de Productos</h2> <a href="exportarPDF_productos.php" class="btn-dashboard">Descargar PDF</a>
+    <h2 style="text-align:center;">Lista de Productos</h2> <a href="expotarPDF_productos.php" class="btn-dashboard">Descargar PDF</a>
     <table class="tabla-productos">
         <thead>
             <tr>

@@ -38,7 +38,7 @@ $fill = false;
 while ($row = $result->fetch_assoc()) {
     $pdf->SetFillColor(255, 230, 240); // Rosita claro para filas
     $pdf->Cell(15, 7, $row['id_usuario'], 1, 0, 'C', $fill);
-    $pdf->Cell(30, 7, utf8_decode($row['nombre']),$fill = !$fill;);
+    $pdf->Cell(30, 7, utf8_decode($row['nombre']), 1, 0, 'C', $fill);
     $pdf->Cell(45, 7, utf8_decode($row['correo']), 1, 0, 'C', $fill);
     $pdf->Cell(25, 7, utf8_decode($row['documento']), 1, 0, 'C', $fill);
     $pdf->Cell(30, 7, utf8_decode($row['celular']), 1, 0, 'C', $fill);
